@@ -1,0 +1,10 @@
+if you are wondering how the hell i was able to pull this off then this will explain everything, the main concept of the character switching
+is by using a modchart, i have fully documented my modchart for anyone trying to figure out what everything does, i went through each section
+of the song and wrote down the curStep of when each character changes, i use a big if statement(in modchart) with each character and sequence in the song
+for when they change. the characters offsets have been matched almost perfectly with a "fake" idle animation(apart of the stages of playstate.hx, 
+also matching the perfect offsets took a good 10 hours) of the character which has a lower opacity (0.8 i think), this was the biggest limition 
+of the mod without heavy modification of the games code, because the character would just dissapear when changing, this however gave it a cool 
+looking afterimage kind of thing and fits well with the crazy effects on screen. another thing is the background, just took the ballisitc background from
+Vs Whitty mod and edited it in GIMP and layered in the Vs tabi Genocide background, added more of the crack thing from ballistic and added the floating rocks
+and background of Vs tricky, since the ballistic background is only 4 frames it didnt take too long, i also had to flip it and match the coordinates in 
+the xml file so whitty is on the same side as the effect.
