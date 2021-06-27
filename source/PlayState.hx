@@ -149,6 +149,13 @@ class PlayState extends MusicBeatState
 	private var totalPlayed:Int = 0;
 	private var ss:Bool = false;
 
+	public var trickybg:FlxSprite;
+	public var whittybg:FlxSprite;
+	public var tabibg:FlxSprite;
+	public var agotibg:FlxSprite;	
+	public var trickyanimation:FlxSprite;
+	public var trickyanimation2:FlxSprite;
+	public var whittyanimation:FlxSprite;
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
@@ -735,38 +742,39 @@ class PlayState extends MusicBeatState
 						table.antialiasing = true;
 						add(table);
 
-						var trickybg:FlxSprite = new FlxSprite(0, 0);
+						trickybg = new FlxSprite(0, 0);
 						trickybg.frames = Paths.getSparrowAtlas('characters/tricky', 'shared');
 						trickybg.animation.addByPrefix('idle', "Idle", 24);
+						trickybg.animation.addByPrefix('singUP', 'Sing Up', 24);
 						trickybg.animation.play('idle');
 						trickybg.offset.set(300, -250);
-						trickybg.alpha = 0.8;
+						trickybg.alpha = 1;
 						add(trickybg);
 
-						var whittybg:FlxSprite = new FlxSprite(0, 0);
+						whittybg = new FlxSprite(0, 0);
 						whittybg.frames = Paths.getSparrowAtlas('characters/WhittyCrazy', 'shared');
 						whittybg.animation.addByPrefix('idle', "Whitty idle dance", 24);
 						whittybg.animation.play('idle');
 						whittybg.offset.set(-450, -200);
 						whittybg.flipX = true;
-						whittybg.alpha = 0.8;
+						whittybg.alpha = 1;
 						add(whittybg);
 
-						var tabibg:FlxSprite = new FlxSprite(0, 0);
+						tabibg = new FlxSprite(0, 0);
 						tabibg.frames = Paths.getSparrowAtlas('characters/MadTabi', 'shared');
 						tabibg.animation.addByPrefix('idle', "MadTabiIdle", 24);
 						tabibg.animation.play('idle');
 						tabibg.offset.set(-800, -250);
 						tabibg.flipX = true;
-						tabibg.alpha = 0.8;
+						tabibg.alpha = 1;
 						add(tabibg);
 
-						var agotibg:FlxSprite = new FlxSprite(0, 0);
+						agotibg = new FlxSprite(0, 0);
 						agotibg.frames = Paths.getSparrowAtlas('characters/Alt_Agoti_Sprites_B', 'shared');
 						agotibg.animation.addByPrefix('idle', "Angry_Agoti_Idle", 24);
 						agotibg.animation.play('idle');
 						agotibg.offset.set(0, -350);
-						agotibg.alpha = 0.8;
+						agotibg.alpha = 1;
 						add(agotibg);	
 
 						var funnyeffect:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('ragestage/thefunnyeffect'));
@@ -775,6 +783,30 @@ class PlayState extends MusicBeatState
 						funnyeffect.scale.set(0.8, 0.8);
 						funnyeffect.offset.set(200, 0);
 						add(funnyeffect);				
+
+						trickyanimation = new FlxSprite(0, 0);
+						trickyanimation.frames = Paths.getSparrowAtlas('characters/trickyanimation');
+						trickyanimation.animation.addByPrefix('cut1', 'Cutscene 1', 24);
+						trickyanimation.offset.set(200, -350);
+						trickyanimation.alpha = 0;
+						trickyanimation.scale.set (1.5, 1.5);
+						add(trickyanimation);
+
+						trickyanimation2 = new FlxSprite(0, 0);
+						trickyanimation2.frames = Paths.getSparrowAtlas('characters/trickyanimation');
+						trickyanimation2.animation.addByPrefix('pillar', 'Pillar Beam Tricky', 24);
+						trickyanimation2.offset.set(500, 300);
+						trickyanimation2.alpha = 0;
+						trickyanimation2.scale.set (1.5, 1.5);
+						add(trickyanimation2);
+
+						whittyanimation = new FlxSprite(0, 0);
+						whittyanimation.frames = Paths.getSparrowAtlas('characters/whittyanimation');
+						whittyanimation.animation.addByPrefix('startup', 'Whitty Ballistic Cutscene', 24);
+						whittyanimation.offset.set(-100, 0);
+						whittyanimation.alpha = 0;
+						add(whittyanimation);
+						whittyanimation.flipX = true;
 			}
 			default:
 			{
@@ -3826,6 +3858,29 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		if (curSong.toLowerCase() == 'absolute-rage' || curSong.toLowerCase() == 'absolute-rage-fullchart')
+		{
+			if (curStep == 1230)
+			{
+				trickybg.animation.play('singUP');
+			}
+			if (curStep == 1594) //1594
+			{
+				trickyanimation.alpha = 1;
+				trickyanimation.animation.play('cut1');
+				remove(trickybg);
+			}
+			if (curStep == 1835) //1835
+			{
+				trickyanimation.alpha = 0;
+				trickyanimation2.alpha = 1;
+				whittyanimation.alpha = 1;
+				trickyanimation2.animation.play('pillar');
+				whittyanimation.animation.play('startup');
+				remove(whittybg);
+			}
+		}
+
 		// yes this updates every step.
 		// yes this is bad
 		// but i'm doing it to update misses and accuracy
@@ -3899,6 +3954,8 @@ class PlayState extends MusicBeatState
 			}
 	
 		}
+
+
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
