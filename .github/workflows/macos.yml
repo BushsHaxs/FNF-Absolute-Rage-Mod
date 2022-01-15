@@ -62,4 +62,4 @@ jobs:
         uses: actions/upload-artifact@v2.2.4
         with:
           name: macBuild
-          path: build/release/macos/bin
+          path: export/release/macos/bin
